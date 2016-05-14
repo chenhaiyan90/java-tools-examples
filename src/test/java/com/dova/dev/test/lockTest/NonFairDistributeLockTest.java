@@ -1,4 +1,4 @@
-package lockTest;
+package com.dova.dev.test.lockTest;
 
 import com.dova.dev.distribute.NonFairDistributeLock;
 

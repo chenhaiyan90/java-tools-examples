@@ -5,7 +5,7 @@ package com.dova.dev.distribute;
  * Created by liuzhendong on 16/4/4.
  */
 
-public class LeaderElection {
+public class PaxosLeaderElection {
 
     public static void main(String[] args)throws  Exception{
         int num = 40;

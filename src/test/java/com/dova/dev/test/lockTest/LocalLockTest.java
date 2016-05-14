@@ -1,4 +1,4 @@
-package lockTest;
+package com.dova.dev.test.lockTest;
 
 import java.util.concurrent.locks.ReentrantLock;
 
