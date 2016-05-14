@@ -1,6 +1,6 @@
 package lockTest;
 
-import distributeLock.NonFairDistributeLock;
+import com.dova.dev.distribute.NonFairDistributeLock;
 
 /**
  * Created by liuzhendong on 16/4/1.

@@ -1,7 +1,5 @@
-package paxos;
+package com.dova.dev.distribute;
 
-
-import java.security.SecureRandom;
 
 /**
  * Created by liuzhendong on 16/4/4.

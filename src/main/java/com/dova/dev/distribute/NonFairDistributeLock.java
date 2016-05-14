@@ -1,4 +1,4 @@
-package distributeLock;
+package com.dova.dev.distribute;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
