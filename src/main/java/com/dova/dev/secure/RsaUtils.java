@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import javax.crypto.Cipher;
 import java.io.*;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -21,7 +22,7 @@ public class RsaUtils {
     private final static String RSA = "RSA";
     private final static String CIPHER_STYLE = "RSA/ECB/PKCS1Padding";
     private final static String SIGNATURE_ALGHORITHEM = "SHA1withRSA";
-
+    private final static Charset charset = Charset.forName("utf-8");
     private final static int KEYSIZE = 1024;
 
     /**
@@ -40,7 +41,7 @@ public class RsaUtils {
      *                  一般1024
      * @return
      */
-    public static KeyPair generateRSAKeyPair(int keyLength) {
+    private static KeyPair generateRSAKeyPair(int keyLength) {
         try {
             KeyPairGenerator kpg = KeyPairGenerator.getInstance(RSA);
             kpg.initialize(keyLength);
@@ -79,7 +80,7 @@ public class RsaUtils {
      * @param key
      * @return
      */
-    private static byte[] decryptData(byte[] encryptedData, Key key) {
+    public static byte[] decryptData(byte[] encryptedData, Key key) {
         try {
             Cipher cipher = Cipher.getInstance(CIPHER_STYLE);
             cipher.init(Cipher.DECRYPT_MODE, key);
@@ -88,6 +89,7 @@ public class RsaUtils {
             return null;
         }
     }
+
 
 
     public static byte[] encryptDataBlock(byte[] data, Key key) {
@@ -116,6 +118,48 @@ public class RsaUtils {
     }
 
 
+    public static byte[] decryptDataBlock(byte[] data, Key key) {
+        byte[] result     = null;
+        int    keySize    = KEYSIZE / 8;
+        int    bufferSize = keySize;
+        byte[] buffer     = new byte[bufferSize];
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(data);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            int readLen = bis.read(buffer, 0, bufferSize);
+            while (readLen > 0) {
+                byte[] dataToDec = new byte[readLen];
+                System.arraycopy(buffer, 0, dataToDec, 0, readLen);
+                byte[] decData = decryptData(dataToDec, key);
+                bos.write(decData);
+                readLen = bis.read(buffer, 0, bufferSize);
+            }
+            result = bos.toByteArray();    //得到解密结果
+            bis.close();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    public static String encrypt(String data,Key key){
+        return new String(Base64.encodeBase64(encryptDataBlock(data.getBytes(charset),key)),charset);
+    }
+
+    public static String decrypt(String data, Key key){
+        return new String(new String(decryptDataBlock(Base64.decodeBase64(data.getBytes(charset)),key),charset));
+    }
+
+    public static String sign(String data, PrivateKey key){
+        return new String(Base64.encodeBase64(sign(data.getBytes(charset),key)),charset);
+    }
+
+    public static boolean verifySign(String data, PublicKey key, String sign) {
+        return verifySign(data.getBytes(charset), key, sign);
+    }
+
     public static byte[] sign(byte[] data, PrivateKey key){
         try{
             Signature signature = Signature.getInstance(SIGNATURE_ALGHORITHEM);
@@ -141,30 +185,6 @@ public class RsaUtils {
         return  false;
     }
 
-    public static byte[] decryptDataBlock(byte[] data, Key key) {
-        byte[] result     = null;
-        int    keySize    = KEYSIZE / 8;
-        int    bufferSize = keySize;
-        byte[] buffer     = new byte[bufferSize];
-        try {
-            ByteArrayInputStream bis = new ByteArrayInputStream(data);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            int readLen = bis.read(buffer, 0, bufferSize);
-            while (readLen > 0) {
-                byte[] dataToDec = new byte[readLen];
-                System.arraycopy(buffer, 0, dataToDec, 0, readLen);
-                byte[] decData = decryptData(dataToDec, key);
-                bos.write(decData);
-                readLen = bis.read(buffer, 0, bufferSize);
-            }
-            result = bos.toByteArray();    //得到解密结果
-            bis.close();
-            bos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     /**
      * 通过公钥byte[](publicKey.getEncoded())将公钥还原，适用于RSA算法
