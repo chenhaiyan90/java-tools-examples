@@ -63,7 +63,6 @@ public class HttpExample {
                     .setConfig(HttpClientFactory.getDefaultRequestConfig())
                     .setEntity(requestEntity)
                     .build();
-
             response = client.execute(request);
             responseEntity = response.getEntity();
             //System.out.println("response:" + response.toString());
