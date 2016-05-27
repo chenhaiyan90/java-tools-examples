@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public class NonFairDistributeLock {
 
-    final JedisPool pool = new JedisPool(generateJedisConfig(), "182.92.183.219");
+    final JedisPool pool = new JedisPool(generateJedisConfig(), "xxx.xxx.xxx.xxx");
 
     final  String JEDIS_LOCK_KEY;
 
