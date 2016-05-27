@@ -6,7 +6,7 @@ package com.dova.dev.algorithems;
 public class TPCounter {
 
 
-    //前面1k以ms计,后面1k以s计算
+    //前面1k以ms计,后面1k以10ms为计算,精度可以自定义
     private int[] count = new int[2001];
 
     private long allCount = 0;
@@ -17,16 +17,22 @@ public class TPCounter {
         count[getIndex(cost)]++;
     }
     private int getIndex(long cost){
-        if(cost/1000 == 0){
+        if(cost < 1000){
             return (int)cost;
         }
-        int seconds = (int)(cost/1000);
-        if(seconds > 1000){
+        int units = (int)((cost - 1000)/10);
+        if(units > 1000){
             return count.length - 1;
         }
-        return 1000 + seconds - 1;
+        return 1000 + units;
     }
 
+    private int convert(int index){
+        if(index < 1000){
+            return index;
+        }
+        return  (index - 1000) * 10 + 1000;
+    }
 
     //获取Tp值
     public int getTPValue(float ratio){
@@ -38,7 +44,7 @@ public class TPCounter {
         for(int i = count.length - 1; i>0; i--){
             tmp += count[i];
             if(tmp > num){
-                return  i;
+                return  convert(i);
             }
         }
         return 0;
