@@ -50,7 +50,7 @@ public class FlowControl {
         public int[] getCount(){
             return this.count;
         }
-        
+
         public String getTimeStr(){
             return  new Timestamp(last_time * 1000).toString();
         }
