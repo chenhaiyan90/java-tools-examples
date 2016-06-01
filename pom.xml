@@ -14,7 +14,8 @@
         <guava.version>17.0</guava.version>
         <junit.version>4.11</junit.version>
         <httpclient.version>4.5</httpclient.version>
-
+        <mysql.connector.version>5.1.25</mysql.connector.version>
+        <ansj.version>3.7.6</ansj.version>
     </properties>
     <dependencies>
         <dependency>
@@ -36,6 +37,17 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ansj</groupId>
+            <artifactId>ansj_seg</artifactId>
+            <version>${ansj.version}</version>
         </dependency>
     </dependencies>
 
@@ -121,4 +133,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>mvn-repo</id>
+            <url>http://maven.nlpcn.org/</url>
+        </repository>
+    </repositories>
 </project>
