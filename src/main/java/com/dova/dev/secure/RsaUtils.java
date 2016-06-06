@@ -149,7 +149,7 @@ public class RsaUtils {
     }
 
     public static String decrypt(String data, Key key){
-        return new String(new String(decryptDataBlock(Base64.decodeBase64(data.getBytes(charset)),key),charset));
+        return new String(decryptDataBlock(Base64.decodeBase64(data.getBytes(charset)),key),charset);
     }
 
     public static String sign(String data, PrivateKey key){
