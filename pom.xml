@@ -17,6 +17,7 @@
         <httpclient.version>4.5</httpclient.version>
         <mysql.connector.version>5.1.25</mysql.connector.version>
         <ansj.version>3.7.6</ansj.version>
+        <email.version>1.4</email.version>
     </properties>
     <dependencies>
         <dependency>
@@ -33,6 +34,11 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>${email.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
