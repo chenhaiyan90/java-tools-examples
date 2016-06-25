@@ -134,4 +134,28 @@ public class FullTextExample {
         long end = System.currentTimeMillis();
         System.out.println(String.format("num:%d cost:%d",num, end-start));
     }
+
+    @Test
+    public void testUpdateSame(){
+        String update = "update billion_test set tag_id  = 4 where id = 1";
+        PreparedStatement ps = null;
+        try{
+
+            ps = ConnectionTool.getConnection().prepareStatement(update);
+            int rows = ps.executeUpdate();
+            System.out.println("rows:" + rows);
+            System.out.println("updateCount:" + ps.getUpdateCount());
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if(ps != null && !ps.isClosed()) {
+                    ps.close();
+                }
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
