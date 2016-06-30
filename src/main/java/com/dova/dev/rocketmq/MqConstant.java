@@ -5,5 +5,4 @@ package com.dova.dev.rocketmq;
  */
 public class MqConstant {
 
-    public static final String NAME_SERVER = "182.92.175.210:9876";
 }

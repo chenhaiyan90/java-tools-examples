@@ -4,6 +4,7 @@ import com.alibaba.rocketmq.client.exception.MQClientException;
 import com.alibaba.rocketmq.client.producer.DefaultMQProducer;
 import com.alibaba.rocketmq.client.producer.SendResult;
 import com.alibaba.rocketmq.common.message.Message;
+import com.dova.dev.Config;
 
 import java.util.Arrays;
 
@@ -16,7 +17,7 @@ public class Producer {
 
     public DefaultMQProducer createProducer(){
         DefaultMQProducer producer = new DefaultMQProducer("Producer");
-        producer.setNamesrvAddr(MqConstant.NAME_SERVER);
+        producer.setNamesrvAddr(Config.RocketMQ_NAME_SERVER);
         return producer;
     }
     public void start(DefaultMQProducer producer)throws MQClientException{

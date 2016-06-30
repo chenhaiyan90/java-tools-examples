@@ -21,6 +21,9 @@
         <ansj.version>3.7.6</ansj.version>
         <email.version>1.4</email.version>
         <rocketmq.client.versin>3.2.6</rocketmq.client.versin>
+        <slf4j.version>1.7.10</slf4j.version>
+        <log4j.version>1.7.12</log4j.version>
+
     </properties>
     <dependencies>
         <dependency>
@@ -89,8 +92,20 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.4.3</version>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpasyncclient</artifactId>
+            <version>4.1.1</version>
         </dependency>
 
     </dependencies>

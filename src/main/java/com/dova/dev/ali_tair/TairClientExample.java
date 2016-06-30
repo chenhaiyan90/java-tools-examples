@@ -3,6 +3,7 @@ package com.dova.dev.ali_tair;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dova.dev.Config;
 import com.taobao.tair.DataEntry;
 import com.taobao.tair.Result;
 import com.taobao.tair.ResultCode;
@@ -16,7 +17,7 @@ public class TairClientExample {
 
         // 创建config server列表
         List<String> confServers = new ArrayList<String>();
-        confServers.add("101.200.121.18:5198");
+        confServers.add(Config.TAIR_CFG_SERVER);
         //  confServers.add("10.10.7.144:51980"); // 可选
 
         // 创建客户端实例
