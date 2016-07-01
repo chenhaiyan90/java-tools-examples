@@ -7,6 +7,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -85,5 +86,16 @@ public class CloneTest {
             ToStringBuilder.reflectionToString(flowControl, ToStringStyle.SHORT_PREFIX_STYLE);
         }
         TimeCounter.sEndAndPrint("ToStringBuilder-" +num);
+    }
+
+    @Test
+    public void testStaticSerialize()throws Exception{
+        TimeCounter timeCounter = new TimeCounter();
+        System.out.println(ToStringBuilder.reflectionToString(timeCounter,ToStringStyle.SHORT_PREFIX_STYLE));
+        Field[] fields = timeCounter.getClass().getDeclaredFields();
+        for (Field field : fields){
+            field.setAccessible(true);
+            System.out.println(String.format("name:%s value:%s",field.getName(),field.get(timeCounter)));
+        }
     }
 }
