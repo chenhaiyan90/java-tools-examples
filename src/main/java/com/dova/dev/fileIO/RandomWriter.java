@@ -12,16 +12,15 @@ import java.util.Random;
  */
 public class RandomWriter{
 
+    Random random = new Random();
 
     public RandomAccessFile  getTestRandomAccessFile() throws Exception{
-        File file = File.createTempFile("random_",System.currentTimeMillis()+".txt",new File("/tmp/"));
+        File file = File.createTempFile("random_"+random.nextInt()+"_",System.currentTimeMillis()+".txt",new File("/tmp/"));
         return  new RandomAccessFile(file,"rw");
     }
 
 
-    @Test
-    public void benchWrite()throws Exception{
-        RandomAccessFile randomFile = getTestRandomAccessFile();
+    public void write(RandomAccessFile randomFile,int num)throws Exception{
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
         sb.append("[random_");
@@ -32,7 +31,6 @@ public class RandomWriter{
         String line = sb.toString();
         int len = line.length();
         System.out.println(String.format("lineSize:%d", line.length()));
-        int num = 1000000;
         long start = System.currentTimeMillis();
         for(int i = 0; i< num;i++){
             randomFile.seek(random.nextInt(num) * len);
@@ -46,6 +44,67 @@ public class RandomWriter{
         }
         long end = System.currentTimeMillis();
         System.out.println(String.format("lines:%d cost:%dms",num,end-start));
+    }
+    @Test
+    public void benchWrite()throws Exception{
+        RandomAccessFile randomFile = getTestRandomAccessFile();
+        randomFile.writeChars("start");
+        write(randomFile,100*1000);
         randomFile.close();
+    }
+
+    @Test
+    public void SingleThreadTest()throws Exception{
+        long start = System.currentTimeMillis();
+        RandomAccessFile randomFile = getTestRandomAccessFile();
+        randomFile.writeChars("start");
+        for (int i = 0; i < 100 ;i++){
+            write(randomFile,100*1000);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(String.format("cost:%dms",end-start));
+    }
+
+
+    @Test
+    public void multiThreadTest()throws Exception{
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    benchWrite();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        RandomAccessFile randomFile = getTestRandomAccessFile();
+        randomFile.writeChars("start");
+        Runnable oneFileRun = new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    write(randomFile,100*1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread[] ts = new Thread[100];
+        for (int i = 0; i < ts.length; i++) {
+            ts[i] = new Thread(oneFileRun);
+        }
+        long start = System.currentTimeMillis();
+
+        for (int i = 0; i < ts.length; i++) {
+            ts[i].start();
+        }
+        for (int i = 0; i < ts.length; i++) {
+            ts[i].join();
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(String.format("cost:%dms",end-start));
+
+
     }
 }

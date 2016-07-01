@@ -1,4 +1,4 @@
-package com.dova.dev.test;
+package com.dova.dev.test.commonTest;
 
 import org.junit.Test;
 

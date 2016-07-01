@@ -14,13 +14,14 @@ import com.alibaba.rocketmq.client.consumer.listener.MessageListenerConcurrently
 import com.alibaba.rocketmq.common.consumer.ConsumeFromWhere;
 import com.alibaba.rocketmq.common.message.Message;
 import com.alibaba.rocketmq.common.message.MessageExt;
+import com.dova.dev.Config;
 
 public class Consumer {
 
     public static void main(String[] args){
         DefaultMQPushConsumer consumer =
                 new DefaultMQPushConsumer("PushConsumer");
-        consumer.setNamesrvAddr("182.92.175.210:9876");
+        consumer.setNamesrvAddr(Config.RocketMQ_NAME_SERVER);
         Random random = new Random();
         try {
             //订阅PushTopic下Tag为push的消息
