@@ -28,7 +28,7 @@ public class Consumer {
             consumer.subscribe("PushTopic", "push");
             //程序第一次启动从消息队列头取数据
             consumer.setConsumeFromWhere(
-                    ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
+                    ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
             consumer.registerMessageListener(
                     new MessageListenerConcurrently() {
                         public ConsumeConcurrentlyStatus consumeMessage(

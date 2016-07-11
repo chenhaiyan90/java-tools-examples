@@ -42,7 +42,7 @@ public class TairClientExample {
         */
         // get one
         // 第一个参数是namespce，第二个是key
-        Result<DataEntry> result = tairManager.get(0, "k3");
+        Result<DataEntry> result = tairManager.get(1, "platformTaobao_"+1467805260);
         System.out.println("get:" + result.isSuccess());
         if (result.isSuccess()) {
             DataEntry entry = result.getValue();
