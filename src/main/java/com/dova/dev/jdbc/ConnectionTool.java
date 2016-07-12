@@ -31,8 +31,12 @@ public class ConnectionTool {
 
 
     private static Connection createConnection(){
+       return createConnection(jdbcUrl,username,password);
+    }
+
+    public static Connection createConnection(String jdbcUrl, String username, String password){
         try{
-           return DriverManager.getConnection(jdbcUrl,username,password);
+            return DriverManager.getConnection(jdbcUrl,username,password);
         }catch (SQLException e){
             e.printStackTrace();
         }
