@@ -49,7 +49,7 @@ public class RandomWriter{
     public void benchWrite()throws Exception{
         RandomAccessFile randomFile = getTestRandomAccessFile();
         randomFile.writeChars("start");
-        write(randomFile,100*1000);
+        write(randomFile,1000*1000);
         randomFile.close();
     }
 
