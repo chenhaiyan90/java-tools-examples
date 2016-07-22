@@ -24,7 +24,7 @@ public class FixDishType {
 
     public static final String dishIds = "4832,4839";
 
-    public static void fix() throws SQLException,IOException{
+    public static void fix() throws SQLException,IOException,InterruptedException{
         Connection connection = ConnectionTool.createConnection("jdbc:mysql://101.200.143.50:3306/jskz_2.0?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&tinyInt1isBit=false",
                 "root","JSKZ-fc4b679d0%");
         if(connection == null){
@@ -38,14 +38,21 @@ public class FixDishType {
 
         BufferedReader br = new BufferedReader(new FileReader(new File("/tmp/dish_wash.csv")));
         String line = null;
+        long start = System.currentTimeMillis();
+        int num = 0,succNum=0;
         while ((line = br.readLine()) != null){
             if(line.length() == 0) continue;
             String[] items = line.split(",");
             if(items.length < 2){
                 throw new RuntimeException("items len < " + items.length);
             }
+            num++;
+            if(num % 100 == 0){
+                Thread.sleep(200);
+            }
             Dish dish = new Dish(Long.valueOf(items[0].trim()), DishTypeUtil.parse(items[1].trim()));
             System.out.println(String.format("dish:%d type:%d",dish.dishId, dish.dishType.getValue()));
+
             updatePs.clearParameters();
             updatePs.setInt(1, dish.dishType.getValue());
             updatePs.setLong(2, dish.dishId);
@@ -53,9 +60,12 @@ public class FixDishType {
             if(res !=1){
                 System.out.println(dish.dishId + ":update fail ");
             }else {
+                succNum++;
                 System.out.println(dish.dishId + ":update succ ");
             }
         }
+        long end = System.currentTimeMillis();
+        System.out.println(String.format("num:%d succNum:%d cost:%d ms",num, succNum,end - start));
      }
 
 

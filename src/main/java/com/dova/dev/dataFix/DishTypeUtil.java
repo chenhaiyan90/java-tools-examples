@@ -8,6 +8,7 @@ public class DishTypeUtil {
      * 炒菜、双拼、主食、羹汤、凉菜、其他
      *
      * 主食,其他,凉菜,双拼,炒菜,糕点,羹汤
+     *
      * DISH:单个菜,TABLE:小饭桌,SET:套餐,STAPLE:主食,SALAD:凉菜,COOKIE:糕点, SOUP:汤饮料
      */
     public enum DishType {
