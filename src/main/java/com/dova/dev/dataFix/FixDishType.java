@@ -25,8 +25,8 @@ public class FixDishType {
     public static final String dishIds = "4832,4839";
 
     public static void fix() throws SQLException,IOException,InterruptedException{
-        Connection connection = ConnectionTool.createConnection("jdbc:mysql://101.200.143.50:3306/jskz_2.0?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&tinyInt1isBit=false",
-                "root","JSKZ-fc4b679d0%");
+        Connection connection = ConnectionTool.createConnection("",
+                "","");
         if(connection == null){
             System.out.println("建立连接失败");
             return;
