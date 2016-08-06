@@ -1,8 +1,6 @@
 package com.dova.dev.dataFix;
 
-import com.dova.dev.common.JSON;
 import com.dova.dev.jdbc.ConnectionTool;
-import com.google.common.base.Strings;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,19 +8,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by liuzhendong on 16/7/12.
  */
 public class FixDishType {
 
-
-
-    public static final String dishIds = "4832,4839";
 
     public static void fix() throws SQLException,IOException,InterruptedException{
         Connection connection = ConnectionTool.createConnection("",
