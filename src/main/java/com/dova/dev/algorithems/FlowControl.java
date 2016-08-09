@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by liuzhendong on 16/5/21.
+ * 时间片的流量控制算法,可以用于很多地方
  */
 public class FlowControl {
     private final int MAX_TOTAL;  //过去一段时间允许的最大总量

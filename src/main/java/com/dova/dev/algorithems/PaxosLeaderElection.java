@@ -1,8 +1,10 @@
-package com.dova.dev.distribute;
+package com.dova.dev.algorithems;
 
 
 /**
  * Created by liuzhendong on 16/4/4.
+ * zookeeper中的领导选取算法模拟实现
+ * 基于paxos
  */
 
 public class PaxosLeaderElection {

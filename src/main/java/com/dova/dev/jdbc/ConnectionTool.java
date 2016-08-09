@@ -25,12 +25,12 @@ public class ConnectionTool {
         }
     }
 
-    private static final String jdbcUrl="jdbc:mysql://127.0.0.1:3205/test";
+    private static final String jdbcUrl="jdbc:mysql://127.0.0.1:3205/test?autoReconnect=true&failOverReadOnly=false&maxReconnects=10";
     private static final String username="test";
     private static final String password="test";
 
 
-    private static Connection createConnection(){
+    public static Connection createConnection(){
        return createConnection(jdbcUrl,username,password);
     }
 

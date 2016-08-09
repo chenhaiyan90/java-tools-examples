@@ -2,6 +2,7 @@ package com.dova.dev.algorithems;
 
 /**
  * Created by liuzhendong on 16/5/27.
+ * 亿万级数据的TP999计算
  */
 public class TPCounter {
 
