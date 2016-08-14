@@ -3,6 +3,7 @@ package com.dova.dev.test.extreme;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Random;
 import java.util.concurrent.locks.LockSupport;
@@ -98,19 +99,19 @@ public class ExtremeTest {
     @Test
     public void testWriteTwoFiles()throws Exception{
         RandomAccessFile access1 = new RandomAccessFile("/tmp/test.1","rw");
-        RandomAccessFile access2 = new RandomAccessFile("/tmp/test.2","rw");
+        RandomAccessFile access2 = new RandomAccessFile("/export/data/test.2","rw");
         int num = 1000 * 1000;
         byte[] buff = new byte[128];
-        random.nextBytes(buff);
         boolean isFirst = true;
         long start = System.currentTimeMillis();
         for (int i = 0; i < num; i++) {
+            random.nextBytes(buff);
             if(isFirst){
                 access1.write(buff);
-                isFirst = false;
+                //isFirst = false;
             }else {
                 access2.write(buff);
-                isFirst = true;
+                //isFirst = true;
             }
         }
         long end = System.currentTimeMillis();
@@ -120,44 +121,70 @@ public class ExtremeTest {
 
 
     @Test
-    public void testTwoThreadWriteTwoFiles()throws Exception{
-        final RandomAccessFile access1 = new RandomAccessFile("/tmp/test.1","rw");
-        final RandomAccessFile access2 = new RandomAccessFile("/tmp/test.2","rw");
-        final int num = 500 * 1000;
-        final byte[] buff = new byte[128];
-        random.nextBytes(buff);
-        Runnable taska = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    for (int i = 0; i < num; i++) {
-                        access1.write(buff);
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
+    public void batchTestWriteRandomFiles() throws Exception{
+        for (int i = 1; i <= 10; i++) {
+            testWriteRandomFiles(i);
+        }
+    }
+    public void testWriteRandomFiles(int fileNum)throws Exception{
+        int num = 10 * 1000 * 1000;
+
+        int randomNum = fileNum;
+        RandomAccessFile[] accessFiles = new RandomAccessFile[randomNum];
+        for (int i = 0; i < randomNum; i++) {
+            accessFiles[i] = new RandomAccessFile("/tmp/test." + i, "rw");
+            accessFiles[i].setLength((num/randomNum) * 64);
+        }
+        byte[] buff = new byte[64];
+        boolean isFirst = true;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < num; i++) {
+            random.nextBytes(buff);
+            accessFiles[random.nextInt(randomNum)].write(buff);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(String.format("num:%d randomNum:%d cost:%d ms", num, randomNum, end-start));
+        for (int i = 0; i < randomNum; i++) {
+            accessFiles[i].close();
+        }
+    }
+
+
+
+
+    class WriteTask implements Runnable{
+        RandomAccessFile access;
+        int writeNum;
+        final byte[] buff = new byte[64];
+        public WriteTask(RandomAccessFile access, int writeNum)throws IOException{
+            this.access = access;
+            this.access.setLength(writeNum * 64);
+            this.writeNum = writeNum;
+            random.nextBytes(buff);
+        }
+
+        @Override
+        public void run() {
+            try {
+                for (int i = 0; i < writeNum; i++) {
+                    //random.nextBytes(buff);
+                    access.write(buff);
                 }
-
+                this.access.close();
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        };
 
-        Runnable taskb = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    for (int i = 0; i < num; i++) {
-                        access2.write(buff);
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+        }
+    }
 
-            }
-        };
+    public void testMultiThreadsWriteRandomFiles(int tsNum)throws Exception{
+        final int totalNum = 10 * 1000 * 1000;
 
-        Thread[] ts = new Thread[2];
-        ts[0] = new Thread(taska);
-        ts[1] = new Thread(taskb);
-
+        Thread[] ts = new Thread[tsNum];
+        for (int i = 0; i < tsNum; i++) {
+            ts[i] = new Thread(new WriteTask(new RandomAccessFile("/tmp/test." + i,"rw"),totalNum/tsNum));
+        }
         long start = System.currentTimeMillis();
         for (int i = 0; i < ts.length; i++) {
             ts[i].start();
@@ -166,8 +193,14 @@ public class ExtremeTest {
             ts[i].join();
         }
         long end = System.currentTimeMillis();
-        System.out.println(String.format("num:%d cost:%d ms", num, end-start));
+        System.out.println(String.format("num:%d tsNum:%d cost:%d ms", totalNum, tsNum, end-start));
     }
 
+    @Test
+    public void batchTestMultiThreadsWriteRandomFiles()throws Exception{
+        for (int i = 1; i <= 100; i++) {
+            testMultiThreadsWriteRandomFiles(i);
+        }
+    }
 
 }

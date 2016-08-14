@@ -49,4 +49,9 @@ public class AssignTest {
         long end = System.currentTimeMillis();
         System.out.println(String.format("num:%d cost:%dms",num, end-start));
     }
+
+    @Test
+    public void testBase(){
+        System.out.println((String)null);
+    }
 }
