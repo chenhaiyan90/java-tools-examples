@@ -98,4 +98,10 @@ public class CloneTest {
             System.out.println(String.format("name:%s value:%s",field.getName(),field.get(timeCounter)));
         }
     }
+
+    @Test
+    public void testFloatEqual(){
+        System.out.println( 3*0.1f == 0.3f);
+        System.out.println(0.2f+0.1f == 0.3f);
+    }
 }

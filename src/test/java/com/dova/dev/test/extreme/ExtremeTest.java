@@ -203,4 +203,51 @@ public class ExtremeTest {
         }
     }
 
+
+    private static float getBaseDeliveryFee(int distance, float totalPrice) {
+        float base = (float)distance * 0.001F * totalPrice / 30.0F + 1.25F;
+        int round = Math.round(base);
+        if((float)round < base) {
+            base = (float)round + 0.5F;
+        } else if((float)round > base && (float)round - base < 0.5F) {
+            base = (float)round;
+        }
+
+        base = base > 5.0F?5.0F:base;
+        return base;
+    }
+
+    public static float getBaseDeliveryFeeOld(int distance,float totalPrice){
+        float base = distance * 0.001f * totalPrice / 30.0f + 1.25f;
+        base = (int)(base +0.5f);
+        base = base > 5.0f ? 5.0f : base;
+        return base;
+    }
+
+    private static float getBaseDeliveryFeeNew(int distance,float totalPrice) {
+        float base = distance * 0.001f * totalPrice / 30.0f + 1.25f;
+        //整数部分
+        int baseInt = (int)base;
+        //小数部分
+        float baseFloat = base - baseInt;
+        if(baseFloat < 0.5f){
+            baseFloat = 0.5f;
+        }else {
+            baseFloat = 1.0f;
+        }
+        base = baseInt + baseFloat;
+        base = base > 5.0f ? 5.0f : base;
+        return base;
+    }
+
+    @Test
+    public void getBaseFee(){
+        int distance = 1375;
+        float totalPrice =32.0f;
+        System.out.println(getBaseDeliveryFee(distance,totalPrice));
+        System.out.println(getBaseDeliveryFeeNew(distance,totalPrice));
+        System.out.println(getBaseDeliveryFeeOld(distance,totalPrice));
+
+    }
+
 }
