@@ -65,7 +65,7 @@ public class SendSms {
         pcm.setMaxTotal(4096);
         pcm.setDefaultMaxPerRoute(1024);
         httpClient = HttpClients.custom().setConnectionManager(pcm).setDefaultRequestConfig(getRequestConfig()).build();
-        executorService = Executors.newFixedThreadPool(10);
+        executorService = Executors.newFixedThreadPool(20);
     }
 
     private RequestConfig getRequestConfig() {
@@ -91,7 +91,9 @@ public class SendSms {
                     continue;
                 }
                 if(tempString.startsWith("#")){
-                    batchPkg.content = tempString.substring(1);
+                    if(Strings.isNullOrEmpty(batchPkg.content)){
+                        batchPkg.content = tempString.substring(1);
+                    }
                 }else {
                     batchPkg.phones.add(tempString);
                 }
@@ -119,14 +121,14 @@ public class SendSms {
         CloseableHttpResponse response = httpClient.execute(post);
         if (response.getStatusLine().getStatusCode() / 100 == 2) {
             String ret = EntityUtils.toString(response.getEntity());
-            System.out.println(ret);
+            System.out.print(ret);
         } else {
             throw new Exception("接口调用失败:" + (response != null ? response.getStatusLine().getStatusCode() : -1));
         }
     }
 
 
-    public void sendBatchPkg(BatchPkg batchPkg){
+    public void sendBatchPkg(BatchPkg batchPkg,boolean truely){
         if(batchPkg == null){
             System.out.println("batchPkg is NULL:" + batchPkg.fileName);
             return;
@@ -152,13 +154,19 @@ public class SendSms {
                     @Override
                     public void run() {
                         try {
-                            //SendSms.this.sendSms(tmpPhones, content);
+                            if(truely){
+                                SendSms.this.sendSms(tmpPhones, content);
+                            }
                             succNum.addAndGet(batchPhones.size());
                             //System.out.println(String.format("SendSucc size:%d phones:%s", batchPhones.size(), tmpPhones));
                         }catch (Exception e){
                             System.out.println(String.format("SendSmsFail content:[%s] phones:[%s]", content, tmpPhones));
                             failNum.addAndGet(batchPhones.size());
-                            batchPkg.errors.addAll(batchPhones);
+                            //这个方法不好,跟公用数据耦合,且注意并发问题
+                            //采用future的设计,异步计算,然后去阻塞查询计算结果
+                            synchronized (SendSms.class){
+                                batchPkg.errors.addAll(batchPhones);
+                            }
                             e.printStackTrace();
                         }
                         semaphore.release(1);
@@ -175,14 +183,14 @@ public class SendSms {
         }
         if(batchPkg.checkAndSwitch()){
             //如果有发送失败的就继续
-            sendBatchPkg(batchPkg);
+            sendBatchPkg(batchPkg,truely);
         }
     }
 
 
     public void sendFromFile(String filename){
         BatchPkg batchPkg = readBatchPkg(filename);
-        sendBatchPkg(batchPkg);
+        sendBatchPkg(batchPkg,false);
     }
     @Test
     public void send0902(){
@@ -199,12 +207,59 @@ public class SendSms {
 
     @Test
     public void send0905(){
-        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/0905/";
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0905";
         //sendBatchPkg(readBatchPkg(base + "test.sample.phones"));
         //sendBatchPkg(readBatchPkg(base + "couponpre_choice.phones"));
-        //sendBatchPkg(readBatchPkg(base + "couponpre_mama.phones"));
-        sendBatchPkg(readBatchPkg(base + "mama.phones.fail"));
+        //sendBatchPkg(readBatchPkg(base + "couponpre_mama.phones"), false);
+        //sendBatchPkg(readBatchPkg(base + "mama.phones.fail"),false);
+        //sendBatchPkg(readBatchPkg(base + "/test.sample.phones"),true);
+        //召回
+        //sendBatchPkg(readBatchPkg(base + "/couponpre_choice.no_order.phones"),true);
+        //sendBatchPkg(readBatchPkg(base + "/couponpre_mama.no_order.phones"),true);
+    }
 
+    @Test
+    public void send0907(){
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0907";
+        //sendBatchPkg(readBatchPkg(base + "/test.phones"),true);
+        //sendBatchPkg(readBatchPkg(base + "/couponpre.phones"),true);
+
+    }
+
+    @Test
+    public void send0909(){
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/dada/0909/";
+        //sendBatchPkg(readBatchPkg(base + "/dada_user_0906_1.txt.no_order.2"),true);
+    }
+
+    @Test
+    public void recallFengniao0908()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0912/";
+        //sendBatchPkg(readBatchPkg(base + "couponpre_0908.phones.no_order.1"),true);
+        //sendBatchPkg(readBatchPkg(base + "couponpre_0908.phones.no_order.2.1"),true);
+        Thread.sleep(5 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "couponpre_0908.phones.no_order.2.2"),true);
+        //finished in 2016-09-12 10:19
+    }
+
+
+
+    @Test
+    public void launch0912()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0912/";
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones.1"),true);
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones.2.1"),true);
+        Thread.sleep(5 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones.2.2"),true);
+    }
+
+
+    @Test
+    public void launch0913()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0913";
+        sendBatchPkg(readBatchPkg(base + "couponpre.phones.1.1"),true);
+        Thread.sleep(10 * 60 * 1000);
+        sendBatchPkg(readBatchPkg(base + "couponpre.phones.1.2"),true);
     }
 
     @Test

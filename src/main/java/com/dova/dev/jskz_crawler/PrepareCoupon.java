@@ -95,7 +95,7 @@ public class PrepareCoupon {
 
     public static void main(String[] arg) {
         final PrepareCoupon sendCoupon = new PrepareCoupon();
-        List<String> list = sendCoupon.readFileByLines("/Users/liuzhendong/Documents/jskz_crawler/build/0905/fengniao.phones.all");
+        List<String> list = sendCoupon.readFileByLines("/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0913/origin.no_sign.0913.phones");
         int i = 0;
         String phones = "";
         Semaphore semaphore = new Semaphore(0);
@@ -114,10 +114,10 @@ public class PrepareCoupon {
                         try {
                             sendCoupon.sendCoupon(temp);
                             System.out.println("send_end:" + tmpSignNum);
-                            semaphore.release(1);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        semaphore.release(1);
                     }
                 });
                 phones = "";
