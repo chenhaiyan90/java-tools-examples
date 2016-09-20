@@ -95,7 +95,7 @@ public class PrepareCoupon {
 
     public static void main(String[] arg) {
         final PrepareCoupon sendCoupon = new PrepareCoupon();
-        List<String> list = sendCoupon.readFileByLines("/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0913/origin.no_sign.0913.phones");
+        List<String> list = sendCoupon.readFileByLines("/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0920/fn.phones");
         int i = 0;
         String phones = "";
         Semaphore semaphore = new Semaphore(0);

@@ -1,6 +1,7 @@
-package com.dova.dev.http;
+package com.dova.dev.async_http;
 
 
+import com.dova.dev.http.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -22,12 +23,12 @@ import java.util.List;
  */
 public class HttpExample {
 
-    private HttpClient client = HttpClientFactory.get();
+    private HttpClient client = com.dova.dev.http.HttpClientFactory.get();
 
     @Test
     public void get(){
         String url = "http://www.baidu.com";
-        HttpUriRequest request = RequestBuilder.get(url).setConfig(HttpClientFactory.getDefaultRequestConfig())
+        HttpUriRequest request = RequestBuilder.get(url).setConfig(com.dova.dev.http.HttpClientFactory.getDefaultRequestConfig())
                 .build();
         HttpResponse response = null;
         HttpEntity entity = null;
@@ -60,7 +61,7 @@ public class HttpExample {
         try{
             HttpEntity requestEntity = new UrlEncodedFormEntity(data, "UTF-8");
             HttpUriRequest request = RequestBuilder.post(url)
-                    .setConfig(HttpClientFactory.getDefaultRequestConfig())
+                    .setConfig(com.dova.dev.http.HttpClientFactory.getDefaultRequestConfig())
                     .setEntity(requestEntity)
                     .build();
             response = client.execute(request);

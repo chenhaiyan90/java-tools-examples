@@ -256,17 +256,49 @@ public class SendSms {
 
     @Test
     public void launch0913()throws Exception{
-        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0913";
-        sendBatchPkg(readBatchPkg(base + "couponpre.phones.1.1"),true);
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0913/";
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones.1.1"),true);
         Thread.sleep(10 * 60 * 1000);
-        sendBatchPkg(readBatchPkg(base + "couponpre.phones.1.2"),true);
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones.1.2"),true);
+    }
+
+    @Test
+    public void dadarecall0918()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/dada/0918/";
+        //sendBatchPkg(readBatchPkg(base + "dada_0913.phones.no_order.1.1"),true);
+        Thread.sleep(6 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "dada_0913.phones.no_order.1.2"),true);
+    }
+
+    @Test
+    public void fnrecall0918()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0918/";
+        //sendBatchPkg(readBatchPkg(base + "fn_0913.phones.no_order"),true);
+    }
+
+    @Test
+    public void launch0918()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0918/";
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones"),true);
+    }
+
+    @Test
+    public void launch0919()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0919/";
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones"),true);
     }
 
     @Test
     public void testFail()throws Exception{
         String phones  = "18811001536,13686877127,18329072121,13898617605,13801721366,18502757749,18801971475,15700076605,13566392920,13476316717,13636310264,13560753177,15021577679,18271393845,13260567674,13906829573,18357019971,13819732614,18582224176,18665945456,18905718676,18717123042,18101811123,15527973503,13818651301,18202891760,18721405436,18682317348,18603665789,13868683911,18868963797,18072725237,13816571192,13575456781,13601371335,15167132845,13817322845,18621026661,13407561511,13636307323,15088692803,15021678188,15004536789,13459999622,13868138045,17757109832,13777846892,13062698869,13070159538,18268196592,13917174784,15645831999,13482015993,13588707645,18611100714,18016266180,13764635770,15201621330,18626307744,15000205453,15824306579,15888822522,13801644533,18868708619,18612131003,15068887333,17721006733,15618804049,13612898905,18357114995,13916113568,18005649066,18811779689,18057780905,13762810018,13585666637,18868807185,15000892326,18969629228,18042402111";
         String content = "让胃远离伤害，杜绝地沟油、杜绝不卫生。【回家吃饭APP】吃家里的饭菜，饮食更健康。新用户一元试吃，满20减19，立戳立享用 http://t.cn/RcZnfDY";
-        sendSms(phones,content);
+        //sendSms(phones,content);
+    }
+
+    @Test
+    public void launch0920()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0920/";
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones"),true);
     }
 
 
