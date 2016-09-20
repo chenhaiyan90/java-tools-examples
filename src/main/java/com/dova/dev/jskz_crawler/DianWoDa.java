@@ -1,6 +1,6 @@
 package com.dova.dev.jskz_crawler;
 
-import com.dova.dev.async_http.HttpClientFactory;
+import com.dova.dev.httpclient.HttpClientFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

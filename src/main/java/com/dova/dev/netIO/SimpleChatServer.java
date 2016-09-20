@@ -1,18 +1,21 @@
 package com.dova.dev.netIO;
 
-import java.net.*;
+import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
-import java.nio.charset.*;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.StringJoiner;
-import java.util.UUID;
-import java.util.concurrent.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.io.*;
- 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+
+/**
+ *
+ */
 public class SimpleChatServer {
     private int port = 8808;
     private ServerSocketChannel serverSocketChannel = null;
@@ -30,7 +33,8 @@ public class SimpleChatServer {
         serverSocketChannel.socket().setReuseAddress(true);
         serverSocketChannel.configureBlocking(false);
         selector = Selector.open();
-        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+		System.out.println(selector.getClass());
+		serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
     }
     
     

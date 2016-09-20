@@ -1,9 +1,9 @@
 package com.dova.dev.test.httpTest;
 
-import com.dova.dev.async_http.AsyncRequestProducer;
-import com.dova.dev.async_http.AsyncResponseConsumer;
-import com.dova.dev.async_http.HttpClientFactory;
-import com.dova.dev.async_http.Response;
+import com.dova.dev.httpclient.AsyncRequestProducer;
+import com.dova.dev.httpclient.AsyncResponseConsumer;
+import com.dova.dev.httpclient.HttpClientFactory;
+import com.dova.dev.httpclient.Response;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;

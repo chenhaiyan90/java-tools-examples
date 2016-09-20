@@ -125,4 +125,15 @@ public class ClientSocketExample {
             }
         }
     }
+
+
+    @Test
+    public void testConnect()throws Exception{
+        Socket socket =new Socket("182.92.183.219",8018);
+        System.out.println(socket.getLocalPort());
+        int i =0;
+        while ((i++) < 4)
+        socket.getOutputStream().write(("hello world" + i+"\n").getBytes());
+        new CountDownLatch(1).await();
+    }
 }
