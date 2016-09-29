@@ -271,7 +271,7 @@ public class SendSms {
     }
 
     @Test
-    public void fnrecall0918()throws Exception{
+    public void fnrecall0913()throws Exception{
         String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0918/";
         //sendBatchPkg(readBatchPkg(base + "fn_0913.phones.no_order"),true);
     }
@@ -301,5 +301,91 @@ public class SendSms {
         //sendBatchPkg(readBatchPkg(base + "couponpre.phones"),true);
     }
 
+
+    @Test
+    public void dadarecall0912()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/dada/0921/";
+        //sendBatchPkg(readBatchPkg(base + "dd0912.no_order.1.1"),true);
+        Thread.sleep(6 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "dd0912.no_order.1.2"),true);
+    }
+
+
+    @Test
+    public void fnrecall0912()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0921/";
+        //sendBatchPkg(readBatchPkg(base + "fn0912.normal.no_order.1.1"),true);
+        Thread.sleep(6 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "fn0912.normal.no_order.1.2"),true);
+        Thread.sleep(60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "fn0912.fancuo.no_order"),true);
+
+    }
+
+    @Test
+    public void launchfn0921()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0921/";
+        //sendBatchPkg(readBatchPkg(base + "couponpre.phones"),true);
+    }
+
+
+    @Test
+    public void fnrecall0918()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0922/";
+        //sendBatchPkg(readBatchPkg(base + "fn_0918.phones.no_order.1.1"),true);
+        Thread.sleep(6 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "fn_0918.phones.no_order.1.2"),true);
+    }
+
+    @Test
+    public void launchdd0922()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/dada/0922/";
+        //sendBatchPkg(readBatchPkg(base + "couponpre_0901.phones"),true);
+    }
+
+    @Test
+    public void fnrecall0919()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0923/";
+        //sendBatchPkg(readBatchPkg(base + "fn_0919.phones.no_order.1.1"),true);
+        Thread.sleep(6 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "fn_0919.phones.no_order.1.1"),true);
+    }
+
+    @Test
+    public void fnrecall0920()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0926/";
+        //sendBatchPkg(readBatchPkg(base + "fn_0920.phones.no_order.1.1"),true);
+        Thread.sleep(6 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "fn_0920.phones.no_order.1.2"),true);
+    }
+
+    @Test
+    public void launchdd0926()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/dada/0926/";
+        //sendBatchPkg(readBatchPkg(base + "dd0926.phones"),true);
+    }
+
+    @Test
+    public void fnrecall0921()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0928/";
+        //sendBatchPkg(readBatchPkg(base + "fn0921.phones.no_order.couponpre"),true);
+    }
+
+    @Test
+    public void dd0927_recall_0708()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/dd0708/";
+        //sendBatchPkg(readBatchPkg(base + "dd0708_15w_35w.phones.couponpre"),true);
+        Thread.sleep(6 * 60 * 1000);
+        //sendBatchPkg(readBatchPkg(base + "dd0708_tail_20w.phones.couponpre"),true);
+    }
+
+
+    @Test
+    public void dd0929_recall_092627()throws Exception{
+        String base = "/Users/liuzhendong/Documents/jskz_crawler/build/dada/0929/";
+        sendBatchPkg(readBatchPkg(base + "dd0926.phones.no_order"),true);
+        Thread.sleep(6 * 60 * 1000);
+        sendBatchPkg(readBatchPkg(base + "dd0927.phones.no_order"),true);
+    }
 
 }

@@ -35,8 +35,8 @@ public class PrepareCoupon {
 
     public PrepareCoupon() {
         PoolingHttpClientConnectionManager pcm = new PoolingHttpClientConnectionManager();
-        pcm.setMaxTotal(4096);
-        pcm.setDefaultMaxPerRoute(1024);
+        pcm.setMaxTotal(1024);
+        pcm.setDefaultMaxPerRoute(512);
         httpClient = HttpClients.custom().setConnectionManager(pcm).setDefaultRequestConfig(getRequestConfig()).build();
     }
 
@@ -95,7 +95,7 @@ public class PrepareCoupon {
 
     public static void main(String[] arg) {
         final PrepareCoupon sendCoupon = new PrepareCoupon();
-        List<String> list = sendCoupon.readFileByLines("/Users/liuzhendong/Documents/jskz_crawler/build/fengniao/0920/fn.phones");
+        List<String> list = sendCoupon.readFileByLines("/Users/liuzhendong/Documents/jskz_crawler/build/dd0708/dd0708_tail_25w.txt");
         int i = 0;
         String phones = "";
         Semaphore semaphore = new Semaphore(0);

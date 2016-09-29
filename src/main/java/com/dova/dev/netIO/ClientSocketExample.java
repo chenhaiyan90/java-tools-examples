@@ -2,6 +2,7 @@ package com.dova.dev.netIO;
 
 import org.junit.Test;
 
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,11 +130,29 @@ public class ClientSocketExample {
 
     @Test
     public void testConnect()throws Exception{
-        Socket socket =new Socket("182.92.183.219",8018);
+        String ip = "182.92.183.0";
+        int host = 8018;
+        Socket socket =new Socket();
+        socket.connect(new InetSocketAddress(ip, host),1000);
         System.out.println(socket.getLocalPort());
         int i =0;
         while ((i++) < 4)
         socket.getOutputStream().write(("hello world" + i+"\n").getBytes());
         new CountDownLatch(1).await();
+    }
+
+    @Test
+    public void testReuse()throws Exception{
+        Socket socket = new Socket();
+        socket.setReuseAddress(true);
+        System.out.println(socket.getLocalPort() + ":" + socket.getPort());
+        //socket.bind(null);
+        //System.out.println(socket.getLocalPort() + ":" + socket.getPort());
+        socket.connect(new InetSocketAddress("182.92.183.219",6379));
+        System.out.println(socket.getLocalPort() + ":" + socket.getPort());
+        socket.close();
+        socket.connect(new InetSocketAddress("182.92.183.219",80));
+        System.out.println(socket.getLocalPort() + ":" + socket.getPort());
+
     }
 }

@@ -14,11 +14,13 @@ public class ConnTest {
     @Test
     public void testConnect()throws Exception{
         //随意给一个端口,去连接会有什么效果,结果是报read time out exception
-        Socket socket = new Socket("127.0.0.1",8808);
+        String ip = "172.21.0.10";
+        int port = 6379;
+        Socket socket = new Socket(ip,port);
         System.out.println(socket.getPort()+" is ok");
-        Jedis jedis = new Jedis("127.0.0.1",8808);
+        Jedis jedis = new Jedis(ip, port);
         System.out.println("connect ok");
-        System.out.println(jedis.exists("123"));
+        System.out.println(jedis.get("pubkey"));
         System.out.println("query ok");
     }
 }
